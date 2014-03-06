@@ -3,7 +3,7 @@
 ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 
-require("config.php");
+require("../config.php");
 
 function fetch_data($keys){
     $con=mysqli_connect(HOST,USERNAME,PASSWORD,DATABASE);
