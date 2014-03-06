@@ -7,11 +7,15 @@ function create_table(){
 }
 
 function check(){
-    if(!$_GET["api_key"]){
+    if(!isset($_GET["api_key"])){
         return_error();
         die();
     }
     if($_GET["api_key"]!=API_KEY){
+        return_error();
+        die();
+    }
+    if(!isset($_GET["service"])){
         return_error();
         die();
     }
@@ -25,7 +29,7 @@ function write_data(){
         return_error();
     }
     $value = json_encode($_GET);
-    $SQL = "INSERT INTO ". DATABASE . "." . TABLE . "(data) VALUES ('$value');";
+    $SQL = "INSERT INTO ". DATABASE . "." . $_GET["service"] . "(data) VALUES ('$value');";
     mysqli_query($con, $SQL);
 }
 
