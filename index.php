@@ -34,11 +34,20 @@ function write_data(){
 }
 
 function return_true(){
-    echo $_GET["callback"].'("ok")';
+    if(isset($_GET["callback"])){
+        echo $_GET["callback"].'("ok")';
+    } else {
+        echo "ok";
+    }
 }
 
 function return_error(){
-    echo $_GET["callback"].'("error connecting database")';
+    if(isset($_GET["callback"])){
+        echo $_GET["callback"].'("error connecting database")';
+    }
+    else {
+        echo "error connecting database";
+    }
 }
 
 check();
