@@ -1,4 +1,4 @@
-T License (MIT)
+THE MIT License (MIT)
 [OSI Approved License]
 The MIT License (MIT)
 
