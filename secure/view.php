@@ -5,12 +5,61 @@ ini_set('display_startup_errors',1);
 
 require("../config.php");
 
+
+function get_sql() {
+    $SQL = "SELECT * FROM " . $_GET["service"];
+
+    if(isset($_GET["from"])) {
+        $SQL .= " WHERE  `timestamp` > " . $_GET["from"];
+    }
+
+    if(isset($_GET["to"])) {
+        $SQL .= " and  `timestamp` < " . $_GET["to"];
+    }
+
+    $SQL .= " ORDER BY `timestamp` DESC";
+
+    if(!isset($_GET["from"])){
+        $SQL .= " LIMIT 50";
+    }
+
+    $SQL .= ";";
+    return $SQL;
+}
+
+function fetch_as_json(){
+    $con=mysqli_connect(HOST,USERNAME,PASSWORD,DATABASE);
+    if (mysqli_connect_errno()) {
+        echo "there was an error connecting";
+    }
+
+    $SQL = get_sql();
+    $results_to_be_jsoned = array();
+
+    $result = mysqli_query($con, $SQL);
+    if($result){
+        while($row = mysqli_fetch_array($result)) {
+            $content = array();
+            $content["timestamp"] = $row["timestamp"];
+            $content["data"] = $row["data"];
+            $content["id"] = $row["id"];
+            $results_to_be_jsoned[] = $content;
+        }
+    }
+    die(json_encode($results_to_be_jsoned));
+    mysqli_close($con);
+}
+
+
 function fetch_data($keys){
     $con=mysqli_connect(HOST,USERNAME,PASSWORD,DATABASE);
     if (mysqli_connect_errno()) {
         echo "there was an error connecting";
     }
-    $SQL = "SELECT * FROM " . $_GET["service"] . ";";
+
+    $SQL = get_sql();
+    echo $SQL;
+
     $result = mysqli_query($con, $SQL);
     if($result){
         while($row = mysqli_fetch_array($result)) {
@@ -29,10 +78,16 @@ function fetch_data($keys){
     }
     mysqli_close($con);
 }
+
 ?>
 
 <?php
     if (isset($_GET["service"]) && isset($_GET["keys"])) {
+        if(isset($_GET["dataType"]) && $_GET["dataType"]=="json"){
+            header('Content-Type: application/json');
+            fetch_as_json();
+            return;
+        } else {
 ?>
     <html>
     <head></head>
@@ -56,6 +111,7 @@ function fetch_data($keys){
     </html>
 
 <?php
+        }
     } else {
         echo "service or keys not provided in get params.";
         return;

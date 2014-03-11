@@ -2,10 +2,6 @@
 
 require("config.php");
 
-function create_table(){
-    $sql = "CREATE  TABLE `dumpfetch`.`signup_dump` (`id` INT NOT NULL AUTO_INCREMENT ,`timestamp` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ,`data` TEXT NULL ,PRIMARY KEY (`id`) )ENGINE = MyISAM;";
-}
-
 function check(){
     if(!isset($_GET["api_key"])){
         return_error();
