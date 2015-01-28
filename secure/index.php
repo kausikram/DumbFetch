@@ -19,7 +19,7 @@ function fetch_tables(){
     if($result){
         echo "<ul>";
         while($row = mysqli_fetch_array($result)) {
-            echo "<li>" . $row[0] ."</li>";
+            echo "<li><a href='./view.php?service=$row[0]'>" . $row[0] ."</a></li>";
         }
         echo "</ul>";
     }
