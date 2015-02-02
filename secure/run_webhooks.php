@@ -35,7 +35,7 @@ function fetch_tables(){
 
 function do_curl_call($service, $row){
     echo $service;
-    echo "\n";
+    echo "<br />";
     print_r($row);
 }
 
@@ -44,13 +44,13 @@ function run_calls(){
     $con=mysqli_connect(HOST,USERNAME,PASSWORD,DATABASE);
     if (mysqli_connect_errno()) {
         echo "there was an error connecting";
-        echo "\n";
+        echo "<br />";
     }
 
     foreach($table_list as $table_name){
         $SQL = get_sql($table_name);
         echo $SQL;
-        echo "\n";
+        echo "<br />";
         $result = mysqli_query($con, $SQL);
         if($result){
             while($row = mysqli_fetch_array($result)) {
