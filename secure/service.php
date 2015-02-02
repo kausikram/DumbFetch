@@ -19,7 +19,10 @@ function fetch_as_json(){
     $result = mysqli_query($con, $SQL);
     if($result){
         while($row = mysqli_fetch_array($result)) {
-            $results_to_be_jsoned[] = $row[0];
+            $data_array = array();
+            $data_array["id"] = $row[0];
+            $data_array["name"] = $row[0];
+            $results_to_be_jsoned[] = $data_array;
         }
     }
     die(json_encode($results_to_be_jsoned));
