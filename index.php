@@ -25,6 +25,11 @@ function write_data(){
         return_error();
     }
     $value = json_encode($_GET);
+    $striped_val = strip_tags($value);
+    if ($value != $striped_val){
+        return_error();
+        die();
+    }
     $SQL = "INSERT INTO ". DATABASE . "." . $_GET["service"] . "(data) VALUES ('$value');";
     mysqli_query($con, $SQL);
 }
