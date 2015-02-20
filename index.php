@@ -49,7 +49,7 @@ function return_error($error_message){
         echo $_GET["callback"].'($error_message)';
     }
     else {
-        echo "error connecting database";
+        echo $error_message;
     }
 }
 
