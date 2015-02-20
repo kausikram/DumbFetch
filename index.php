@@ -43,7 +43,8 @@ function return_true(){
 }
 
 function return_error($error_message){
-    http_response_code(400);
+    $protocol = (isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0');
+    header($protocol . ' 400 ' . "Bad Response.");
     if(isset($_GET["callback"])){
         echo $_GET["callback"].'($error_message)';
     }
