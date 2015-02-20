@@ -43,7 +43,7 @@ function return_true(){
 }
 
 function return_error($error_message){
-    http_response_code (400);
+    http_response_code(400);
     if(isset($_GET["callback"])){
         echo $_GET["callback"].'($error_message)';
     }
