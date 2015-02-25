@@ -30,8 +30,11 @@ function write_data(){
         return_error("Sorry We do not allow HTML Data.");
         die();
     }
-    $SQL = "INSERT INTO ". DATABASE . "." . $_GET["service"] . "(data) VALUES ('$value');";
-    mysqli_query($con, $SQL);
+    $SQL = "INSERT INTO ". DATABASE . "." .  mysqli_real_escape_string($con,$_GET["service"]) . "(data) VALUES ('$value');";
+    $result = mysqli_query($con, $SQL);
+    if(!$result){
+        die("Failed");
+    }
 }
 
 function return_true(){
